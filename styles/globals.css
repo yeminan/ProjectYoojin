@@ -1,0 +1,74 @@
+
+body{
+  margin: 0;
+  background-color: #f8f9fa;
+  color: white;
+
+}
+.chart{
+  text-align: center;
+  margin-top: 150px;
+
+}
+.chart-sub
+{
+  text-align: center;
+  color:   red
+};
+.bg-dark {
+  background-color: #212529 !important;
+}
+
+.card {
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+/* 테이블 스타일 개선 */
+.table th, .table td {
+  white-space: nowrap; /* 글자가 줄바꿈되지 않도록 설정 */
+  text-align: center;
+  padding: 8px;
+}
+
+.modal-dialog {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 900px !important;         /* 💡 더 넓은 전체 폭 */
+  max-width: 90vw;
+  z-index: 1055 !important;
+}
+
+.custom-modal-size {
+  width: 100%;
+  max-width: 100%;
+  max-height: 600px;
+}
+.hospital-search-modal .modal-dialog {
+  width: 100vw;         /* 👉 전체 브라우저 폭의 90% */
+  
+}
+
+.hospital-search-modal .modal-content {
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.hospital-search-modal .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.hospital-search-modal .modal-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.hospital-search-modal .modal-table td,
+.hospital-search-modal .modal-table th {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+
+
