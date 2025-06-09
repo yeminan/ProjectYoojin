@@ -5,18 +5,24 @@ Spring Boot API와 연동하여 **회원가입, 병원 정보 조회, 라이선�
 
 ---
 
-## 📌 주요 기능
+## 주요 기능
 
 - ✅ 개인 회원가입 (이메일 인증 포함)
 - ✅ 병원 검색 API 연동
 - ✅ 라이선스 발급, 만료, 연장 관리
 - ✅ 관리자 페이지 UI 구성
-- ✅ 환경변수 분리 관리 (`.env.local`, `.env.sample` 사용
+- ✅ 환경변수 분리 관리 (`.env.local`, `.env.sample`) 사용
 ---
 
-## 🛠 사용 기술
+## 사용 기술
 
-- **Frontend:** React.js (Next.js)
+### Frontend
+
+- React.js (Next.js)
+- React Bootstrap (UI 프레임워크)
+- React Hooks (useState, useEffect) 기반 상태관리
+- 환경변수 관리 (.env.sample 제공)
+  
 ### Backend
 
 - Spring Boot
@@ -26,18 +32,21 @@ Spring Boot API와 연동하여 **회원가입, 병원 정보 조회, 라이선�
 - Email 인증 프로세스 구현 (토큰 발급 및 메일 발송)
 - Exception Handling + ResponseEntity 기반 REST 응답 처리
 - Cross-Origin Resource Sharing (CORS) 설정을 통한 Front-Backend 연동 지원
-- **UI 프레임워크:** React Bootstrap
-- **상태관리:** React Hooks (useState, useEffect)
-- **환경변수:** .env.sample 제공
 
 ---
 
-## 🚀 실행 방법
+## 실행방법
 
-### 1️⃣ 프로젝트 클론
+### 프로젝트 클론
 
 ```bash
 git clone https://github.com/yeminan/ProjectYoojin.git
 cd ProjectYoojin
 npm install
 npm run dev
+```
+
+## 라이선스
+
+본 프로젝트는 개인 포트폴리오 및 비상업적 용도로 공개됩니다.  
+상업적 사용 및 무단 복제는 허용되지 않습니다.
