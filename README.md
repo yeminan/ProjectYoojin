@@ -39,3 +39,5 @@ Spring Boot API와 연동하여 **회원가입, 병원 정보 조회, 라이선�
 ```bash
 git clone https://github.com/yeminan/ProjectYoojin.git
 cd ProjectYoojin
+npm install
+npm run dev
