@@ -78,6 +78,7 @@ export default function LoginPage() {
                     value={id}
                     onChange={(e) => setId(e.target.value)}
                     onKeyDown={handleKeyPress}
+                    autoComplete="username" // ✅ 아이디 입력란에도 추가
                   />
                 </Form.Group>
 
@@ -89,6 +90,7 @@ export default function LoginPage() {
                     value={pwd}
                     onChange={(e) => setPwd(e.target.value)}
                     onKeyDown={handleKeyPress}
+                    autoComplete="current-password" // ✅ 올바른 속성명
                   />
                 </Form.Group>
 
@@ -101,8 +103,13 @@ export default function LoginPage() {
                 {/* ✅ 여기 추가 */}
                 <div className="text-center mt-3">
                   <span className="text-muted">계정이 없으신가요?</span>{' '}
+                </div>
+                <div className="text-center mt-3">
                   <Button variant="link" onClick={() => router.push("/signup/personal")}>
-                    회원가입
+                    개인 회원가입
+                  </Button>
+                  <Button variant="link" onClick={() => router.push("/signup/institution")}>
+                    기관 회원가입
                   </Button>
                 </div>
               </Form>

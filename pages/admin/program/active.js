@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Form, Badge, Pagination, Button } from "react-bootstrap";
 import AdminLayout from "../../components/AdminLayout";
-import { licenseDummyData } from "../data/licenseData";
 
 export default function ActiveLicensesPage() {
   const [data, setData] = useState([]);
@@ -11,13 +10,42 @@ export default function ActiveLicensesPage() {
   const [selectedIds, setSelectedIds] = useState([]);
   const itemsPerPage = 10;
 
-  // 초기 데이터 로딩
-  useEffect(() => {
-    const activeLicenses = licenseDummyData.filter((l) => l.status === "active");
-    setData(activeLicenses);
-  }, []);
+  const ApiUrlKey = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  // 검색 필터링
+useEffect(() => {
+  const fetchActiveLicenses = async () => {
+    try {
+      const res = await fetch(`${ApiUrlKey}/api/licenses?page=0&size=1000&status=used`);
+      const json = await res.json();
+      console.log("✅ 라이선스 API 응답:", json);
+
+      if (!json.content || !Array.isArray(json.content)) {
+        console.error("❌ 응답 형식이 예상과 다름", json);
+        return;
+      }
+
+      const formatted = json.content.map((l) => ({
+        id: l.licenseId,
+        key: l.rawKey?.replace(/(.{4})/g, "$1-").slice(0, -1) || "-",
+        user: l.userName || "-",
+        email: l.userEmail || "-",
+        org: l.userOrg || "-", // ✅ 병원/기관
+        product: l.product || "-",
+        expiresAt: l.expiresAt || "-",
+        status: l.status,
+      }));
+
+      setData(formatted);
+    } catch (err) {
+      console.error("🔴 라이선스 불러오기 실패", err);
+    }
+  };
+
+  fetchActiveLicenses();
+}, []);
+
+
+  // ✅ 검색 필터링
   useEffect(() => {
     const searched = data.filter((l) =>
       [l.user, l.email, l.product, l.key].some((field) =>
@@ -34,14 +62,12 @@ export default function ActiveLicensesPage() {
     currentPage * itemsPerPage
   );
 
-  // 체크박스 선택/해제
   const toggleSelect = (id) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
 
-  // 전체 선택/해제
   const toggleSelectAll = () => {
     const allIds = paginated.map((l) => l.id);
     const isAllSelected = allIds.every((id) => selectedIds.includes(id));
@@ -52,7 +78,6 @@ export default function ActiveLicensesPage() {
     }
   };
 
-  // 선택 항목 비활성화 처리
   const handleDeactivate = () => {
     if (selectedIds.length === 0) {
       alert("선택된 항목이 없습니다.");
@@ -68,8 +93,9 @@ export default function ActiveLicensesPage() {
 
     setData(updated);
     setSelectedIds([]);
-    alert("선택된 라이선스가 만료 처리되었습니다.");
+    alert("선택된 라이선스가 만료 처리되었습니다. (로컬 반영됨)");
   };
+
 
   return (
     <AdminLayout>
@@ -103,6 +129,7 @@ export default function ActiveLicensesPage() {
             </th>
             <th>🔑 라이선스 키</th>
             <th>👤 사용자</th>
+            <th>🏥 소속</th>
             <th>📧 이메일</th>
             <th>📅 만료일</th>
             <th>📌 상태</th>
@@ -120,20 +147,13 @@ export default function ActiveLicensesPage() {
               </td>
               <td>{l.key}</td>
               <td>{l.user}</td>
+              <td>{l.org}</td>
               <td>{l.email}</td>
               <td>{l.expiresAt}</td>
               <td>
-                <Badge
-                    bg={
-                        l.status === "active"
-                        ? "success"
-                        : l.status === "expired"
-                        ? "danger"
-                        : "secondary"
-                    }
-                    >
+                  <Badge bg="success">
                     {l.status}
-                </Badge>
+                  </Badge>
               </td>
             </tr>
           ))}

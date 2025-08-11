@@ -18,7 +18,9 @@ export default function PersonalSignup() {
     emailDomain: "",
     emailDomainType: "",
     hospital: "",
+    phone: "", // ✅ 추가
   });
+
 
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const searchParams = useSearchParams();
@@ -127,9 +129,10 @@ export default function PersonalSignup() {
       emailPrefix,
       emailDomain,
       hospital,
+      phone,
     } = formData;
 
-    if (!loginId || !password || !confirmPassword || !name || !emailPrefix || !emailDomain || !hospital) {
+    if (!loginId || !password || !confirmPassword || !name || !emailPrefix || !emailDomain || !hospital || !phone) {
       alert("입력값을 모두 채워주세요.");
       return;
     }
@@ -157,6 +160,7 @@ export default function PersonalSignup() {
         email: fullEmail,
         org: hospital,
         pwd: password,
+        phone: phone,
       };
 
       const saveRes = await fetch(`${ApiUrlKey}/api/users`, {
@@ -177,7 +181,7 @@ export default function PersonalSignup() {
   return (
     <Container fluid className="d-flex justify-content-center align-items-center vh-100" style={{ background: "linear-gradient(to right,rgb(125, 186, 255),rgb(84, 147, 255))" }}>
       <Card style={{ width: "40rem", padding: "2rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", backgroundColor: "#fff" }}>
-        <h2 className="text-center mb-4">👤 개인 회원가입</h2>
+        <h2 className="text-center mb-4">개인 회원가입</h2>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>아이디</Form.Label>
@@ -202,6 +206,17 @@ export default function PersonalSignup() {
           <Form.Group className="mb-3">
             <Form.Label>이름</Form.Label>
             <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>전화번호</Form.Label>
+            <Form.Control
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="010-1234-5678"
+          />
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -246,11 +261,11 @@ export default function PersonalSignup() {
           </Form.Group>
 
           <Form.Group className="mb-1">
-            <Form.Label>병원 주소</Form.Label>
+            <Form.Label>주소</Form.Label>
             <div className="d-flex">
               <Form.Control type="text" name="hospital" value={formData.hospital} readOnly />
               <Button variant="info" onClick={handleHospitalSearch} className="ms-2" style={{ minWidth: "100px" }}>
-                병원 검색
+                검색
               </Button>
             </div>
           </Form.Group>
@@ -263,10 +278,10 @@ export default function PersonalSignup() {
 
       <Modal scrollable show={showHospitalModal} onHide={() => setShowHospitalModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>🏥 병원 검색</Modal.Title>
+          <Modal.Title>검색</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>예제 병원 리스트</p>
+          <p>병원 리스트</p>
           <ul className="list-group">
             <li className="list-group-item" onClick={() => selectHospital("서울병원")}>서울병원</li>
             <li className="list-group-item" onClick={() => selectHospital("부산병원")}>부산병원</li>
