@@ -1,4 +1,4 @@
-# Yoojin BioSoft
+# 관리자 웹페이지 개발
 
 **Spring + Next.js 기반 관리자 페이지**  
 Spring API와 연동하여 **회원가입, 병원 정보 조회, 라이선스 관리 기능**을 제공합니다.
